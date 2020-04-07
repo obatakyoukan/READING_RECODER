@@ -1,0 +1,40 @@
+version: '3'
+services:
+  client:
+    build: ./client
+    ports:
+      - 8080:8080
+    volumes:
+      - ./client:/app
+    command: yarn serve
+
+  server:
+    links:
+     - mysql
+    build: ./server
+    #context: .
+    #dockerfile: ./server/Dockerfile
+    ports:
+     - "8888:8888"
+    volumes:
+     - ./server:/api
+  
+  mysql:
+   build: ./db
+   image: mysql:5.7
+   #command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+   command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci 
+   restart: always
+   environment:
+    MYSQL_USER: root
+    MYSQL_ROOT_PASSWORD: password
+    MYSQL_DATABASE: go_sample
+   hostname: mysql
+   ports:
+    - "3306:3306"
+   volumes:
+    - ./db/conf.d:/etc/mysql/conf.d
+    - ./log/mysql:/var/log/mysql
+    - mysql_data:/var/lib/mysql
+volumes:
+    mysql_data:
