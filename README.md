@@ -1,7 +1,16 @@
-##
- 連携成功
- 残りのやること
- .ユーザー機能
+
+- 起動
+```bash
+ docker-compose up -d
+```
+
+- 終了
+```bash
+ docker-compose down
+```
+ 
+- 残りのやること
+ - ユーザー機能
  
 
 
